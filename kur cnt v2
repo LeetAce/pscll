@@ -7,7 +7,7 @@ FILE *file;
 using namespace std;
 struct Entity
 {
-  char name[255];
+	char name[255];
 	int continent;
 	int population;
 	char code[16];
@@ -105,15 +105,26 @@ void editing1(int counts,int id){
 	id=id-1;
 Entity z;
 int tempi=0;
+int choic;
 char tempc[255];
 Entity tempe;
-cout<<"Type in new name: ";
-cin>>tempe.name;
+cout<<"1 to change name\n2 to change continent\n3 to change population\n4 to change the country code: ";
 Entity* ss= new Entity[counts];
 openitup();
 while(fread(&z, sizeof z, 1, file)) {ss[tempi]=z;tempi++;};
 fclose(file);
-strncpy(ss[id].name, tempe.name, sizeof(z.name));
+
+cin>>choic;
+switch(choic){
+case 1: {cout<<"Type in new name: ";
+	cin>>tempe.name;strncpy(ss[id].name, tempe.name, sizeof(z.name));}break;
+case 2: {cout<<"Type in new continent: ";
+	cin>>tempe.continent;ss[id].continent = tempe.continent;}break;
+case 3: {cout<<"Type in new population: ";
+	cin>>tempe.population;ss[id].population = tempe.population;}break;
+case 4: {cout<<"Type in new code: ";
+	cin>>tempe.code;strncpy(ss[id].code, tempe.code, sizeof(z.code));}break;
+};
 	purge();
 	fwrite(ss,sizeof(z),counts,file);
 	fclose(file);
@@ -122,7 +133,31 @@ choice=2;
 };
 
 
-void editing2(Entity* s[],int cnt,int qq){};
+void editing2(Entity s[],int counts,int id){
+id=id-1;
+Entity z;
+int tempi=0;
+int choic;
+char tempc[255];
+Entity tempe;
+cout<<"1 to change name\n2 to change continent\n3 to change population\n4 to change the country code: ";
+cin>>choic;
+switch(choic){
+case 1: {cout<<"Type in new name: ";
+	cin>>tempe.name;strncpy(s[id].name, tempe.name, sizeof(z.name));}break;
+case 2: {cout<<"Type in new continent: ";
+	cin>>tempe.continent;s[id].continent = tempe.continent;}break;
+case 3: {cout<<"Type in new population: ";
+	cin>>tempe.population;s[id].population = tempe.population;}break;
+case 4: {cout<<"Type in new code: ";
+	cin>>tempe.code;strncpy(s[id].code, tempe.code, sizeof(z.code));}break;
+};
+	purge();
+	fwrite(s,sizeof(z),counts,file);
+	fclose(file);
+system("cls");
+choice=2;
+};
 
 
 void deleting1(int cnt,int qq){
@@ -157,7 +192,7 @@ system("cls");};
 void listing() {
 	int specialchoice,cnt;
 	system("cls");
-	cout<<"Type 1 to query by alphabetical order (A-Z)\n2 for relative order (firstly added firstly shown)\n3 for Continental order (1-6)\n4 to order by population:";
+	cout<<"Type 1 to query by alphabetical order (A-Z)\n2 for relative order (firstly added firstly shown)\n3 for Continental order (1-6)\n4 to order by population: ";
 	cin>>specialchoice;
 	switch(specialchoice){
 	case 1:{
@@ -196,11 +231,11 @@ void listing() {
 	  printf("Code: %s\n\n", s[i].code);
 	}
 	  printf("\n\nTotal Countries: %i\n",sig);
-	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu \n3 to edit entry :";
+	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu \n3 to edit entry: ";
 int choic;
 	  cin>>choic;
 	  switch (choic){
-	  case 1: {cout<<"Type the number of entry you would like to be removed:";
+	  case 1: {cout<<"Type the number of entry you would like to be removed: ";
 		  int qq;
 		  cnt=0;
 		  openitup();
@@ -215,7 +250,7 @@ int choic;
 		  while(fread(&q, sizeof q, 1, file)) {counts++;};
 		  fclose(file);
 		  
-		  cin>>qq;editing1(counts,qq);}}}break;
+		  cin>>qq;editing2(s,counts,qq);}}}break;
 
 	case 2:{
 	system("cls");
@@ -231,11 +266,11 @@ int choic;
 	  printf("\n\nTotal Countries: %i\n",i-1);
 	  
 	  fclose(file);
-	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu :";
+	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu \n3 to edit entry: ";
 int choic;
 	  cin>>choic;
 	  switch (choic){
-	  case 1: {cout<<"Type the number of entry you would like to be removed:";
+	  case 1: {cout<<"Type the number of entry you would like to be removed: ";
 		  int qq;
 		  cnt=0;
 		  openitup();
@@ -244,6 +279,7 @@ int choic;
 		  cin>>qq; deleting1(cnt,qq);break;}
 	  case 2: {system("cls");prnt();cin>>choice;}break;
 		case 3: {
+			cout<<"Type the number of country which you would like to edit: ";
 		  int qq;
 		  int counts=0;
 		  openitup();
@@ -289,19 +325,26 @@ int choic;
 	  printf("Code: %s\n\n", s[i].code);
 	}
 	  printf("\n\nTotal Countries: %i\n",sig);
-	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu :";
+	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu \n3 to edit entry: ";
 int choic;
 	  cin>>choic;
 	  switch (choic){
-	  case 1: {cout<<"Type the number of entry you would like to be removed:";
+	  case 1: {cout<<"Type the number of entry you would like to be removed: ";
 		  int qq;
 		  cnt=0;
 		  openitup();
 		  while(fread(&q, sizeof q, 1, file)) {cnt++;};
 		  fclose(file);
 		  cin>>qq; deleting2(&s,cnt,qq);break;}
-	  case 2: {system("cls");prnt();cin>>choice;}}}break;
-
+	  case 2: {system("cls");prnt();cin>>choice;}break;
+	  case 3: {
+		  int qq;
+		  int counts=0;
+		  openitup();
+		  while(fread(&q, sizeof q, 1, file)) {counts++;};
+		  fclose(file);
+		  
+		  cin>>qq;editing2(s,counts,qq);}}break;}
 		  case 4:{
 	system("cls");
 	Entity q;
@@ -337,7 +380,7 @@ int choic;
 	  printf("Code: %s\n\n", s[i].code);
 	}
 	  printf("\n\nTotal Countries: %i\n",sig);
-	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu :";
+	  cout<<"Type 1 to delete entries\n2 to get back to the choosing menu \n3 to edit entry: ";
 int choic;
 	  cin>>choic;
 	  switch (choic){
@@ -348,6 +391,14 @@ int choic;
 		  while(fread(&q, sizeof q, 1, file)) {cnt++;};
 		  fclose(file);
 		  cin>>qq; deleting2(&s,cnt,qq);break;}
-	  case 2: {system("cls");prnt();cin>>choice;}}}break;
+	  case 2: {system("cls");prnt();cin>>choice;}
+	  	  case 3: {
+		  int qq;
+		  int counts=0;
+		  openitup();
+		  while(fread(&q, sizeof q, 1, file)) {counts++;};
+		  fclose(file);
+		  cin>>qq;editing2(s,counts,qq);}}break;
+}
 }
 }
