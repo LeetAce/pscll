@@ -19,11 +19,31 @@ void enter(Entity *z){
 	cin >> z->name;
 	if (int(z->name[0])>='a'){z->name[0]-=32;};
 	cout <<"Continent: ";
-	cin >> z->continent;
+	// Check for continent correctivity
+	char zcn[255];bool trus=true;
+	cin >> zcn;
+	while(trus!=false){if (zcn[0]<='6' && zcn[0]>='1' && zcn[1]=='\0'){trus=false;} else {cout<<"\nThe continent may be onlt int from 1 (one) to 6 (six): ";cin>>zcn;};}
+	int num;
+	sscanf(zcn, "%4d", &num);
+	z->continent=num;
 	cout <<"Population: ";
-	cin >> z->population;
+	//Check for population correctivity
+	trus=false;
+	char zcn2[255];
+	cin>>zcn2;
+	while(trus!=true){
+	int i;
+		int len = strlen(zcn2);
+    for (i = 0; i < len; i++)
+    {
+		if (len==1)	{cin>>zcn2;i=-1;len=strlen(zcn2);}
+		else if (!isdigit(zcn2[i])){cin>>zcn2;i=0;len=strlen(zcn2);};
+    }trus=true;};
+sscanf(zcn2, "%4d", &num);
+	z->population=num;
 	cout <<"Country Code: ";
-	cin >> z->code;}
+	cin >> z->code;	
+	};
 void writing(){
 	system("cls");
 	int n;
@@ -33,7 +53,8 @@ void writing(){
 	for (int i=0;i<n;i++)
 	{
 		enter(&cnt[i]);
-		cout<<"\n";
+		//check(cnt,i,n);
+		cout<<"\n";	
 	}
 	openitup();
 	fwrite(cnt,sizeof(Entity),n,file);
@@ -131,8 +152,6 @@ case 4: {cout<<"Type in new code: ";
 system("cls");
 choice=2;
 };
-
-
 void editing2(Entity s[],int counts,int id){
 id=id-1;
 Entity z;
@@ -158,8 +177,6 @@ case 4: {cout<<"Type in new code: ";
 system("cls");
 choice=2;
 };
-
-
 void deleting1(int cnt,int qq){
 openitup();
 Entity z;
